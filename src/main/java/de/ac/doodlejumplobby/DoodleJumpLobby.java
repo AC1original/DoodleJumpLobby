@@ -1,17 +1,21 @@
 package de.ac.doodlejumplobby;
 
 import de.ac.doodlejumplobby.commands.ClearStepsCommand;
-import de.ac.doodlejumplobby.commands.DeleteDoodleJumpLevel;
+import de.ac.doodlejumplobby.commands.DeleteDoodleJumpLevelCommand;
 import de.ac.doodlejumplobby.commands.DoodleJumpCommand;
+import de.ac.doodlejumplobby.commands.TestCommand;
 import de.ac.doodlejumplobby.events.PlayerFall;
 import de.ac.doodlejumplobby.events.PlayerLeave;
+import de.ac.doodlejumplobby.steps.Step;
 import de.ac.doodlejumplobby.util.DoodleJumpBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +33,9 @@ public final class DoodleJumpLobby extends JavaPlugin implements Listener {
         doodleJumpBuilder.build();
 
         getCommand("doodlejump").setExecutor(new DoodleJumpCommand());
-        getCommand("deletelevel").setExecutor(new DeleteDoodleJumpLevel());
+        getCommand("deletelevel").setExecutor(new DeleteDoodleJumpLevelCommand());
         getCommand("clearsteps").setExecutor(new ClearStepsCommand());
+        getCommand("test").setExecutor(new TestCommand());
 
         manager.registerEvents(new PlayerLeave(), this);
         manager.registerEvents(new PlayerFall(), this);
@@ -42,5 +47,26 @@ public final class DoodleJumpLobby extends JavaPlugin implements Listener {
 
     public DoodleJumpBuilder getDoodleJumpBuilder() {
         return doodleJumpBuilder;
+    }
+
+    public void startJump(Player p) {
+        getServer().getScheduler().scheduleSyncRepeatingTask(DoodleJumpLobby.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+                if (DoodleJumpLobby.doodleJumpers.contains(p) && p.getVelocity().getY()<=0 && p.isOnGround()) {
+
+                    //überprüfen ob der spiler auf einer "stufe" bzw step steht
+                    Step.steps.forEach(step -> {
+                        if (p.getLocation().getBlock().getRelative(BlockFace.DOWN).getType().equals(step.getMaterial()))
+                            step.onJump(p, step.getLocation());
+                    });
+                    boost(p, 1.2);
+                }
+            }
+        }, 1, 1);
+    }
+
+    public void boost(Player p, double strength) {
+        p.setVelocity(new Vector(0, strength, 0));
     }
 }

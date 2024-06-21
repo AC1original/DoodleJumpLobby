@@ -5,10 +5,18 @@ api-version: '1.8'
 commands:
   doodlejump:
     description: starts doodle jump game.
+
   deletelevel:
+
     description: deletes the entire doodle jump "level".
     permission: doodlejump.delete.level
+
   clearsteps:
     description: deletes every step.
     permission: doodlejump.delete.steps
+
+  test:
+    description: test
+
+
 

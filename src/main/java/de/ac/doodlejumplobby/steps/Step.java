@@ -1,29 +1,33 @@
 package de.ac.doodlejumplobby.steps;
-
-import de.ac.doodlejumplobby.DoodleJumpLobby;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.util.Vector;
+import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class Step {
-    protected Location location;
-    public static final List<Step> steps = new ArrayList<>();
+    protected Location location = new Location(Bukkit.getWorld("world"), 0, 0, 0);
+    public static final CopyOnWriteArrayList<Step> steps = new CopyOnWriteArrayList<>();
 
     public abstract Material getMaterial();
-    public abstract boolean moveable();
+    public abstract boolean updateable();
 
-    public final void spawn(Location location) {
+    public void spawn(Location location) {
         this.location = location;
         steps.add(this);
     }
 
-    public void onJump(){}
+    public void onJump(Player p, Location blockLoc) {
+        //
+    }
 
     public Location getLocation() {
         return location;
     }
+
+    protected void update() {
+
+    }
+
 }

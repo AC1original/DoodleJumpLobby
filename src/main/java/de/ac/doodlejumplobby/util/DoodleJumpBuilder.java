@@ -1,13 +1,12 @@
 package de.ac.doodlejumplobby.util;
 import de.ac.doodlejumplobby.steps.Step;
-import de.ac.doodlejumplobby.steps.types.BoostStep;
 import de.ac.doodlejumplobby.steps.types.BreakableStep;
 import de.ac.doodlejumplobby.steps.types.DefaultStep;
 import de.ac.doodlejumplobby.steps.types.MoveableStep;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-
 import java.util.Random;
 
 public class DoodleJumpBuilder {
@@ -16,7 +15,7 @@ public class DoodleJumpBuilder {
     private final World world;
     private final int centerX , centerY , centerZ;
 
-    private final int HEIGHT = 500;
+    private final int HEIGHT = 250;
 
     public DoodleJumpBuilder(Location doodleJumpLocation, int size) {
         this.doodleJumpLocation = doodleJumpLocation;
@@ -53,13 +52,13 @@ public class DoodleJumpBuilder {
         Location stepBefore = new Location(world, 0, 0, 0);
 
         Random rnd = new Random();
-        Step[] steps = {new DefaultStep(), new BreakableStep(), new BoostStep(), new MoveableStep()};
+        Step[] steps = {new DefaultStep(), new BreakableStep(), new MoveableStep()};
         Step step = steps[0];
 
         for (int y = centerY + 5; y < centerY + HEIGHT; y += 5) {
             if (new Random().nextInt(100) <= 70) //Erneute Random intialisierung nicht weil ich dumm bin sondern damit sich der seed ändert.
                 step = steps[0];
-            else step = steps[new Random().nextInt(3)+1];
+            else step = steps[new Random().nextInt(3)];
 
             //verhindern, dass zwei blöcke direkt übereinander sind
             int randomX;
@@ -98,8 +97,6 @@ public class DoodleJumpBuilder {
             }
         }
     }
-
-
 
     public Location getDoodleJumpLocation() {
         return doodleJumpLocation;

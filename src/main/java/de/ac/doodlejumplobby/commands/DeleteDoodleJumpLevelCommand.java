@@ -8,7 +8,7 @@ import org.bukkit.command.TabCompleter;
 import java.util.Collections;
 import java.util.List;
 
-public class DeleteDoodleJumpLevel implements CommandExecutor, TabCompleter {
+public class DeleteDoodleJumpLevelCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         DoodleJumpLobby.getInstance().getDoodleJumpBuilder().deleteLevel();
