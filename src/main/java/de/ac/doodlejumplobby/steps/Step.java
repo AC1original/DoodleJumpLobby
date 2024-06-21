@@ -1,14 +1,18 @@
 package de.ac.doodlejumplobby.steps;
 
+import de.ac.doodlejumplobby.DoodleJumpLobby;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Step {
-    private Location location;
+    protected Location location;
     public static final List<Step> steps = new ArrayList<>();
+
     public abstract Material getMaterial();
     public abstract boolean moveable();
 
@@ -17,9 +21,7 @@ public abstract class Step {
         steps.add(this);
     }
 
-    public void onJump() {
-
-    }
+    public void onJump(){}
 
     public Location getLocation() {
         return location;

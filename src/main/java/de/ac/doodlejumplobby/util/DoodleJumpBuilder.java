@@ -1,6 +1,9 @@
 package de.ac.doodlejumplobby.util;
 import de.ac.doodlejumplobby.steps.Step;
+import de.ac.doodlejumplobby.steps.types.BoostStep;
+import de.ac.doodlejumplobby.steps.types.BreakableStep;
 import de.ac.doodlejumplobby.steps.types.DefaultStep;
+import de.ac.doodlejumplobby.steps.types.MoveableStep;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -14,7 +17,6 @@ public class DoodleJumpBuilder {
     private final int centerX , centerY , centerZ;
 
     private final int HEIGHT = 500;
-    private final Random rnd = new Random();
 
     public DoodleJumpBuilder(Location doodleJumpLocation, int size) {
         this.doodleJumpLocation = doodleJumpLocation;
@@ -48,11 +50,27 @@ public class DoodleJumpBuilder {
     }
 
     public void createSteps() {
-        final DefaultStep defaultStep = new DefaultStep();
+        Location stepBefore = new Location(world, 0, 0, 0);
+
+        Random rnd = new Random();
+        Step[] steps = {new DefaultStep(), new BreakableStep(), new BoostStep(), new MoveableStep()};
+        Step step = steps[0];
+
         for (int y = centerY + 5; y < centerY + HEIGHT; y += 5) {
-            int randomX = centerX + rnd.nextInt(size - 2) - (size / 3);
-            int randomZ = centerZ + rnd.nextInt(size - 2) - (size / 3);
-            defaultStep.spawn(new Location(world, randomX, y, randomZ));
+            if (new Random().nextInt(100) <= 70) //Erneute Random intialisierung nicht weil ich dumm bin sondern damit sich der seed ändert.
+                step = steps[0];
+            else step = steps[new Random().nextInt(3)+1];
+
+            //verhindern, dass zwei blöcke direkt übereinander sind
+            int randomX;
+            int randomZ;
+            do {
+                randomX = centerX + rnd.nextInt(size - 2) - (size / 3);
+                randomZ = centerZ + rnd.nextInt(size - 2) - (size / 3);
+
+            } while (randomX == stepBefore.getBlockX() && randomZ == stepBefore.getBlockZ());
+            step.spawn(new Location(world, randomX, y, randomZ));
+            stepBefore = new Location(world, randomX, y, randomZ);
             buildSteps();
         }
     }

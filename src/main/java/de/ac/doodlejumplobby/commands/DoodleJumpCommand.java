@@ -2,10 +2,9 @@ package de.ac.doodlejumplobby.commands;
 
 import de.ac.doodlejumplobby.DoodleJumpLobby;
 import de.ac.doodlejumplobby.steps.Step;
-import de.ac.doodlejumplobby.steps.types.DefaultStep;
-import de.ac.doodlejumplobby.util.DoodleJumpBuilder;
-import de.ac.doodlejumplobby.util.DoodleJumpHelper;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -21,14 +20,14 @@ public class DoodleJumpCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (!(sender instanceof Player)) return false;
         Player p = (Player) sender;
-        if (DoodleJumpHelper.doodleJumpers.isEmpty()) {
+        if (DoodleJumpLobby.doodleJumpers.isEmpty()) {
             DoodleJumpLobby.getInstance().getDoodleJumpBuilder().clearSteps();
             DoodleJumpLobby.getInstance().getDoodleJumpBuilder().createSteps();
         }
 
         Location loc = DoodleJumpLobby.getInstance().getDoodleJumpBuilder().getDoodleJumpLocation();
         p.teleport(new Location(loc.getWorld(),loc.getX(), loc.getY()+1, loc.getBlockZ()));
-        DoodleJumpHelper.doodleJumpers.add(p);
+        DoodleJumpLobby.doodleJumpers.add(p);
         jump(p);
         return false;
     }
@@ -42,9 +41,17 @@ public class DoodleJumpCommand implements CommandExecutor, TabCompleter {
         DoodleJumpLobby.getInstance().getServer().getScheduler().scheduleSyncRepeatingTask(DoodleJumpLobby.getInstance(), new Runnable() {
             @Override
             public void run() {
-                if (DoodleJumpHelper.doodleJumpers.isEmpty()) DoodleJumpLobby.getInstance().getDoodleJumpBuilder().clearSteps();
-                if (DoodleJumpHelper.doodleJumpers.contains(p) && p.getVelocity().getY()<=0 && p.isOnGround())
+                if (DoodleJumpLobby.doodleJumpers.isEmpty()) DoodleJumpLobby.getInstance().getDoodleJumpBuilder().clearSteps();
+                if (DoodleJumpLobby.doodleJumpers.contains(p) && p.getVelocity().getY()<=0 && p.isOnGround()) {
+
+                    //überprüfen ob der spiler auf einer "stufe" bzw step steht
+                    Step.steps.forEach(step -> {
+                        if (p.getLocation().getBlock().getRelative(BlockFace.DOWN).getType().equals(step.getMaterial()))
+                            step.onJump();
+                    });
+
                     p.setVelocity(new Vector(0, 1.2, 0));
+                }
             }
         }, 1, 1);
     }
