@@ -1,6 +1,7 @@
 package de.ac.doodlejumplobby.events;
 
 import de.ac.doodlejumplobby.DoodleJumpLobby;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,6 +14,7 @@ public class PlayerFall implements Listener {
         if (DoodleJumpLobby.doodleJumpers.contains(p) && p.getFallDistance() >= 9 && !p.isFlying()) {
             p.sendMessage("loosed!");
             DoodleJumpLobby.doodleJumpers.remove(p);
+            p.playSound(p.getLocation(), Sound.ANVIL_LAND, 0.5f, 1f);
             if (DoodleJumpLobby.doodleJumpers.isEmpty())
                 DoodleJumpLobby.getInstance().getDoodleJumpBuilder().clearSteps();
         }

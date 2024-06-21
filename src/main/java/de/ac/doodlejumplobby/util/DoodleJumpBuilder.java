@@ -3,6 +3,7 @@ import de.ac.doodlejumplobby.steps.Step;
 import de.ac.doodlejumplobby.steps.types.BreakableStep;
 import de.ac.doodlejumplobby.steps.types.DefaultStep;
 import de.ac.doodlejumplobby.steps.types.FinishStep;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -69,8 +70,16 @@ public class DoodleJumpBuilder {
                 randomZ = centerZ + rnd.nextInt(size - 1) - (size / 3);
 
             } while (randomX == stepBefore.getBlockX() && randomZ == stepBefore.getBlockZ());
-            step.spawn(new Location(world, randomX, y, randomZ));
-            stepBefore = new Location(world, randomX, y, randomZ);
+
+            //überprüfen ob es der erste step ist
+
+            if (step.getLocation().getBlockY() <= centerY+5 && step.getLocation().equals(new Location(world, centerX, step.getLocation().getBlockY(), centerZ)))
+                //block blockiert sprung
+                step.spawn(new Location(world, centerX + 1, y, centerZ));
+            else {
+                step.spawn(new Location(world, randomX, y, randomZ));
+                stepBefore = new Location(world, randomX, y, randomZ);
+            }
             buildSteps();
         }
         //"finish step" spawnen

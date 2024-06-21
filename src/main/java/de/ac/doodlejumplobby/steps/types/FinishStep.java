@@ -4,6 +4,7 @@ import de.ac.doodlejumplobby.DoodleJumpLobby;
 import de.ac.doodlejumplobby.steps.Step;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 public class FinishStep extends Step {
@@ -18,6 +19,7 @@ public class FinishStep extends Step {
         if (DoodleJumpLobby.doodleJumpers.isEmpty())
             DoodleJumpLobby.getInstance().getDoodleJumpBuilder().clearSteps();
         p.sendMessage("Jump finished!");
+        p.playSound(p.getLocation(), Sound.LEVEL_UP, 0.7f, 1f);
 
     }
 }

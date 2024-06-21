@@ -1,9 +1,7 @@
 package de.ac.doodlejumplobby;
-
 import de.ac.doodlejumplobby.commands.ClearStepsCommand;
 import de.ac.doodlejumplobby.commands.DeleteDoodleJumpLevelCommand;
 import de.ac.doodlejumplobby.commands.DoodleJumpCommand;
-import de.ac.doodlejumplobby.commands.TestCommand;
 import de.ac.doodlejumplobby.events.PlayerFall;
 import de.ac.doodlejumplobby.events.PlayerLeave;
 import de.ac.doodlejumplobby.steps.Step;
@@ -36,7 +34,6 @@ public final class DoodleJumpLobby extends JavaPlugin implements Listener {
         getCommand("doodlejump").setExecutor(new DoodleJumpCommand());
         getCommand("deletelevel").setExecutor(new DeleteDoodleJumpLevelCommand());
         getCommand("clearsteps").setExecutor(new ClearStepsCommand());
-        getCommand("test").setExecutor(new TestCommand());
 
         manager.registerEvents(new PlayerLeave(), this);
         manager.registerEvents(new PlayerFall(), this);
