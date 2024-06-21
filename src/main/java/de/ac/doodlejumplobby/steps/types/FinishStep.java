@@ -8,6 +8,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 public class FinishStep extends Step {
+
     @Override
     public Material getMaterial() {
         return Material.GOLD_BLOCK;

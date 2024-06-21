@@ -20,7 +20,6 @@ public class DoodleJumpCommand implements CommandExecutor, TabCompleter {
             plugin.getDoodleJumpBuilder().clearSteps();
             plugin.getDoodleJumpBuilder().createSteps();
         }
-
         Location loc = plugin.getDoodleJumpBuilder().getDoodleJumpLocation();
 
         //spieler zentrieren

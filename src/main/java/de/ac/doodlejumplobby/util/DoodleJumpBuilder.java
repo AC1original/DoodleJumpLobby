@@ -72,7 +72,6 @@ public class DoodleJumpBuilder {
             } while (randomX == stepBefore.getBlockX() && randomZ == stepBefore.getBlockZ());
 
             //überprüfen ob es der erste step ist
-
             if (step.getLocation().getBlockY() <= centerY+5 && step.getLocation().equals(new Location(world, centerX, step.getLocation().getBlockY(), centerZ)))
                 //block blockiert sprung
                 step.spawn(new Location(world, centerX + 1, y, centerZ));

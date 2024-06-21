@@ -8,6 +8,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 public class BreakableStep extends Step {
+
     @Override
     public Material getMaterial() {
         return Material.COBBLESTONE;

@@ -28,6 +28,4 @@ public abstract class Step {
     public Location getLocation() {
         return location;
     }
-
-
 }

@@ -28,6 +28,7 @@ public final class DoodleJumpLobby extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         instance = this;
+
         this.doodleJumpBuilder = new DoodleJumpBuilder(new Location(Bukkit.getWorld("world"), 300, 50, 0), 6);
         doodleJumpBuilder.build();
 

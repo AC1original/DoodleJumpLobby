@@ -15,8 +15,6 @@ commands:
     description: deletes every step.
     permission: doodlejump.delete.steps
 
-  test:
-    description: test
 
 
 

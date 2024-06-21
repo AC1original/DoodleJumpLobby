@@ -11,6 +11,7 @@ public class PlayerFall implements Listener {
     @EventHandler
     public void playerMove(PlayerMoveEvent e) {
         Player p = e.getPlayer();
+
         if (DoodleJumpLobby.doodleJumpers.contains(p) && p.getFallDistance() >= 9 && !p.isFlying()) {
             p.sendMessage("loosed!");
             DoodleJumpLobby.doodleJumpers.remove(p);
