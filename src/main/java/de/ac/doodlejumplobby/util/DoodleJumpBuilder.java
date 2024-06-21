@@ -3,7 +3,6 @@ import de.ac.doodlejumplobby.steps.Step;
 import de.ac.doodlejumplobby.steps.types.BreakableStep;
 import de.ac.doodlejumplobby.steps.types.DefaultStep;
 import de.ac.doodlejumplobby.steps.types.FinishStep;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;

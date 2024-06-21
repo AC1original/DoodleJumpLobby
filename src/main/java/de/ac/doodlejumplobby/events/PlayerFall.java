@@ -13,7 +13,7 @@ public class PlayerFall implements Listener {
         Player p = e.getPlayer();
 
         if (DoodleJumpLobby.doodleJumpers.contains(p) && p.getFallDistance() >= 9 && !p.isFlying()) {
-            p.sendMessage("loosed!");
+            p.sendMessage("Game Over!");
             DoodleJumpLobby.doodleJumpers.remove(p);
             p.playSound(p.getLocation(), Sound.ANVIL_LAND, 0.5f, 1f);
             if (DoodleJumpLobby.doodleJumpers.isEmpty())
