@@ -1,0 +1,4 @@
+name: DoodleJumpLobby
+version: '${project.version}'
+main: de.ac.doodlejumplobby.DoodleJumpLobby
+api-version: '1.16'
