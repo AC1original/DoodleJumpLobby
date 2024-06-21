@@ -13,13 +13,8 @@ public class BreakableStep extends Step {
     }
 
     @Override
-    public boolean updateable() {
-        return false;
-    }
-
-    @Override
     public void onJump(Player p, Location blockLoc) {
         p.getLocation().getBlock().getRelative(BlockFace.DOWN).setType(Material.AIR);
-        Step.steps.remove(this);
+        steps.remove(this);
     }
 }

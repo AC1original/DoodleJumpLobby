@@ -12,9 +12,9 @@ public class PlayerFall implements Listener {
         Player p = e.getPlayer();
         if (DoodleJumpLobby.doodleJumpers.contains(p) && p.getFallDistance() >= 9 && !p.isFlying()) {
             p.sendMessage("loosed!");
-            DoodleJumpLobby.getInstance().getDoodleJumpBuilder().clearSteps();
             DoodleJumpLobby.doodleJumpers.remove(p);
-
+            if (DoodleJumpLobby.doodleJumpers.isEmpty())
+                DoodleJumpLobby.getInstance().getDoodleJumpBuilder().clearSteps();
         }
     }
 

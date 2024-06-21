@@ -11,7 +11,6 @@ public abstract class Step {
     public static final CopyOnWriteArrayList<Step> steps = new CopyOnWriteArrayList<>();
 
     public abstract Material getMaterial();
-    public abstract boolean updateable();
 
     public void spawn(Location location) {
         this.location = location;
@@ -19,15 +18,15 @@ public abstract class Step {
     }
 
     public void onJump(Player p, Location blockLoc) {
-        //
+        //play sound
+    }
+    public void onBumpHead(Player p, Location blockLoc) {
+        //wird momentan nicht gebraucht
     }
 
     public Location getLocation() {
         return location;
     }
 
-    protected void update() {
-
-    }
 
 }

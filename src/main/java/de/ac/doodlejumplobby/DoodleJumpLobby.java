@@ -10,6 +10,7 @@ import de.ac.doodlejumplobby.steps.Step;
 import de.ac.doodlejumplobby.util.DoodleJumpBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -29,7 +30,7 @@ public final class DoodleJumpLobby extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         instance = this;
-        this.doodleJumpBuilder = new DoodleJumpBuilder(new Location(Bukkit.getWorld("world"), 0, 100, 0), 6);
+        this.doodleJumpBuilder = new DoodleJumpBuilder(new Location(Bukkit.getWorld("world"), 300, 50, 0), 6);
         doodleJumpBuilder.build();
 
         getCommand("doodlejump").setExecutor(new DoodleJumpCommand());
@@ -54,14 +55,20 @@ public final class DoodleJumpLobby extends JavaPlugin implements Listener {
             @Override
             public void run() {
                 if (DoodleJumpLobby.doodleJumpers.contains(p) && p.getVelocity().getY()<=0 && p.isOnGround()) {
-
                     //überprüfen ob der spiler auf einer "stufe" bzw step steht
                     Step.steps.forEach(step -> {
                         if (p.getLocation().getBlock().getRelative(BlockFace.DOWN).getType().equals(step.getMaterial()))
-                            step.onJump(p, step.getLocation());
+                            step.onJump(p, p.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation());
                     });
                     boost(p, 1.2);
                 }
+                //überprüfen ob der spieler sich den "kopf anschlägt"
+                Step.steps.forEach(step -> {
+                    if (p.getLocation().getBlock().getRelative(BlockFace.UP).getType().equals(step.getMaterial()))
+                        step.onJump(p, p.getLocation().getBlock().getRelative(BlockFace.UP).getLocation());
+                });
+                if (p.getLocation().getBlock().getRelative(BlockFace.SELF).getType().equals(Material.SLIME_BLOCK))
+                    p.sendMessage("slime");
             }
         }, 1, 1);
     }

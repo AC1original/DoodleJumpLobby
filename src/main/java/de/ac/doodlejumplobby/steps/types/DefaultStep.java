@@ -8,10 +8,4 @@ public class DefaultStep extends Step {
         return Material.QUARTZ_BLOCK;
     }
 
-    @Override
-    public boolean updateable() {
-        return false;
-    }
-
-
 }
