@@ -10,7 +10,6 @@ public abstract class Step {
     protected Location location = new Location(Bukkit.getWorld("world"), 0, 0, 0);
     public static final CopyOnWriteArrayList<Step> steps = new CopyOnWriteArrayList<>();
 
-    protected boolean soundPlayed = false;
     public abstract Material getMaterial();
 
     public void spawn(Location location) {
